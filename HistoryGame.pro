@@ -12,17 +12,20 @@ SOURCES += \
     gamewindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    questionwindow.cpp
+    questionwindow.cpp \
+    resultswindow.cpp
 
 HEADERS += \
     gamewindow.h \
     mainwindow.h \
-    questionwindow.h
+    questionwindow.h \
+    resultswindow.h
 
 FORMS += \
     gamewindow.ui \
     mainwindow.ui \
-    questionwindow.ui
+    questionwindow.ui \
+    resultswindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

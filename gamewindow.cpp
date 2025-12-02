@@ -231,11 +231,18 @@ void GameWindow::handleAnswerResult(bool correct)
     questions[theme][valueIndex].answered = true;
     currentQuestionButton->setEnabled(false);
 
-    // Сохраняем оригинальный стиль и меняем только цвет фона
-    QString originalStyle = currentQuestionButton->styleSheet();
-    QRegularExpression re("background-color:[^;]*;");
-    originalStyle.replace(re, "background-color: #808080;");
-    currentQuestionButton->setStyleSheet(originalStyle);
+    // Делаем кнопку серой
+    currentQuestionButton->setStyleSheet(R"(
+        QPushButton {
+            background: #7f8c8d;
+            color: #bdc3c7;
+            font-size: 20pt;
+            font-weight: bold;
+            padding: 15px;
+            border: 2px solid #636e72;
+            border-radius: 10px;
+        }
+    )");
 
     if(correct) scores[currentPlayer] += questions[theme][valueIndex].value;
 
@@ -253,6 +260,61 @@ void GameWindow::updateScore()
 {
     ui->currentPlayerLabel->setText("Текущий игрок: " + players[currentPlayer]);
     ui->scoreLabel->setText("Счет: " + QString::number(scores[currentPlayer]));
+}
+
+void GameWindow::on_endGameButton_clicked()
+{
+    qDebug() << "Завершение игры...";
+
+    // Отключаем все кнопки вопросов
+    disableAllQuestionButtons();
+
+    // Отключаем кнопку завершения игры
+    ui->endGameButton->setEnabled(false);
+    ui->endGameButton->setStyleSheet(R"(
+        QPushButton {
+            background: #7f8c8d;
+            color: #bdc3c7;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+        }
+    )");
+
+    // Показываем окно результатов
+    ResultsWindow *resultsWindow = new ResultsWindow(players, scores, this);
+    resultsWindow->exec();
+}
+
+void GameWindow::disableAllQuestionButtons()
+{
+    // Список всех кнопок вопросов
+    QList<QPushButton*> allButtons = {
+        ui->theme1_100, ui->theme1_200, ui->theme1_300, ui->theme1_400, ui->theme1_500,
+        ui->theme2_100, ui->theme2_200, ui->theme2_300, ui->theme2_400, ui->theme2_500,
+        ui->theme3_100, ui->theme3_200, ui->theme3_300, ui->theme3_400, ui->theme3_500,
+        ui->theme4_100, ui->theme4_200, ui->theme4_300, ui->theme4_400, ui->theme4_500,
+        ui->theme5_100, ui->theme5_200, ui->theme5_300, ui->theme5_400, ui->theme5_500
+    };
+
+    // Отключаем все кнопки
+    for (QPushButton *button : allButtons) {
+        button->setEnabled(false);
+
+        button->setStyleSheet(R"(
+        QPushButton {
+            background: #7f8c8d;
+            color: #bdc3c7;
+            font-size: 20pt;
+            font-weight: bold;
+            padding: 15px;
+            border: 2px solid #636e72;
+            border-radius: 10px;
+        }
+    )");
+    }
 }
 
 GameWindow::~GameWindow()

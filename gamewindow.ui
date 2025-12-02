@@ -34,12 +34,6 @@
       </property>
       <item>
        <widget class="QFrame" name="frame">
-        <property name="minimumHeight">
-         <number>50</number>
-        </property>
-        <property name="maximumHeight">
-         <number>60</number>
-        </property>
         <property name="styleSheet">
          <string notr="true">QFrame {
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
@@ -72,9 +66,6 @@
          </property>
          <item>
           <widget class="QLabel" name="currentPlayerLabel">
-           <property name="minimumWidth">
-            <number>280</number>
-           </property>
            <property name="styleSheet">
             <string notr="true">QLabel {
     font-size: 14pt;
@@ -93,9 +84,6 @@
          </item>
          <item>
           <widget class="QLabel" name="scoreLabel">
-           <property name="minimumWidth">
-            <number>180</number>
-           </property>
            <property name="styleSheet">
             <string notr="true">QLabel {
     font-size: 14pt;
@@ -117,12 +105,6 @@
       </item>
       <item>
        <widget class="QLabel" name="backgroundImageLabel">
-        <property name="minimumHeight">
-         <number>180</number>
-        </property>
-        <property name="maximumHeight">
-         <number>200</number>
-        </property>
         <property name="styleSheet">
          <string notr="true">QLabel {
     border-radius: 10px;
@@ -144,9 +126,6 @@
       </item>
       <item>
        <widget class="QFrame" name="frame_2">
-        <property name="minimumHeight">
-         <number>520</number>
-        </property>
         <property name="styleSheet">
          <string notr="true">QFrame {
     background-color: #16213e;
@@ -1293,6 +1272,72 @@ QPushButton:disabled {
          </item>
         </layout>
        </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="bottomLayout">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="endGameButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #e74c3c, stop:1 #c0392b);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+}
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #c0392b, stop:1 #a93226);
+}
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #a93226, stop:1 #922b21);
+}</string>
+        </property>
+        <property name="text">
+         <string>🏁 Завершить игру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>

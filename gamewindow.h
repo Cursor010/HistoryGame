@@ -5,6 +5,8 @@
 #include <QStringList>
 #include <QVector>
 #include <QPushButton>
+#include "resultswindow.h"  // Добавьте эту строку
+#include "mainwindow.h" // Добавить эту строку
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GameWindow; }
@@ -28,6 +30,7 @@ public:
 private slots:
     void handleQuestionClick();
     void handleAnswerResult(bool correct);
+    void on_endGameButton_clicked();  // Добавьте эту строку
 
 private:
     Ui::GameWindow *ui;
@@ -36,6 +39,7 @@ private:
     void updateScore();
     void createQuestions();
     bool loadQuestionsFromXML();
+    void disableAllQuestionButtons();  // Добавьте эту строку
 
     QStringList players;
     QVector<int> scores;
