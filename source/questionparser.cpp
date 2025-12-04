@@ -7,12 +7,9 @@
 QuestionParser::QuestionParser()
     : loaded_count_(0), success_(false) {}
 
-// ОСНОВНОЙ МЕТОД: загрузка ТОЛЬКО из ресурсов
 bool QuestionParser::LoadFromResource(QVector<QVector<Question>>& questions) {
-    qDebug() << "=== ЗАГРУЗКА ВОПРОСОВ ИЗ РЕСУРСОВ ===";
 
-    // Пробуем загрузить из ресурсов (только один путь)
-    QString resourcePath = ":/data/questions.xml";  // ТОЛЬКО ЭТОТ ПУТЬ
+    QString resourcePath = ":/data/questions.xml";
 
     qDebug() << "Попытка открыть ресурс:" << resourcePath;
 

@@ -245,6 +245,5 @@ void ResultsWindow::on_closeButton_clicked() {
 }
 
 void ResultsWindow::closeEvent(QCloseEvent* event) {
-    // Не испускаем сигнал здесь, чтобы не дублировать
-    event->accept();
+    on_closeButton_clicked();
 }

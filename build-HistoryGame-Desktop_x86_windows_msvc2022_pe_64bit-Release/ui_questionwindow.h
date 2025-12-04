@@ -16,7 +16,6 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
@@ -29,7 +28,6 @@ public:
     QFrame *answerFrame;
     QVBoxLayout *verticalLayout_2;
     QLabel *answerLabel;
-    QSpacerItem *verticalSpacer;
     QPushButton *showAnswerButton;
     QHBoxLayout *resultButtonsLayout;
     QPushButton *correctButton;
@@ -98,10 +96,6 @@ public:
 
 
         verticalLayout->addWidget(answerFrame);
-
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
-
-        verticalLayout->addItem(verticalSpacer);
 
         showAnswerButton = new QPushButton(QuestionWindow);
         showAnswerButton->setObjectName("showAnswerButton");
