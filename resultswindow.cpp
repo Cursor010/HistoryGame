@@ -1,34 +1,45 @@
 #include "resultswindow.h"
-#include "ui_resultswindow.h"
-#include <QTableWidgetItem>
-#include <QHeaderView>
-#include <algorithm>
-#include <QDebug>
 
-ResultsWindow::ResultsWindow(const QStringList &players, const QVector<int> &scores, QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::ResultsWindow)
-{
-    ui->setupUi(this);
+#include <QCloseEvent>
+#include <QDebug>
+#include <QHeaderView>
+#include <QTableWidgetItem>
+
+#include <algorithm>
+
+#include "ui_resultswindow.h"
+
+ResultsWindow::ResultsWindow(const QStringList& players,
+                             const QVector<int>& scores,
+                             QWidget* parent)
+    : QDialog(parent),
+    ui_(new Ui::ResultsWindow) {
+    ui_->setupUi(this);
 
     // Устанавливаем стиль окна
-    this->setStyleSheet("QDialog { background-color: #1a1a2e; font-family: 'Segoe UI', Arial, sans-serif; }");
+    this->setStyleSheet(
+        "QDialog { background-color: #1a1a2e; font-family: 'Segoe UI', Arial, sans-serif; }");
 
     setWindowTitle("🏆 Результаты игры");
     setMinimumSize(800, 600);
 
     // Получаем отсортированные результаты
-    QVector<QPair<QString, int>> sortedResults = getSortedResults(players, scores);
+    QVector<QPair<QString, int>> sorted_results = GetSortedResults(players, scores);
 
     // Настраиваем таблицу результатов
-    setupResultsTable(sortedResults);
+    SetupResultsTable(sorted_results);
 
     // Подключаем кнопку закрытия
-    connect(ui->closeButton, &QPushButton::clicked, this, &ResultsWindow::on_closeButton_clicked);
+    connect(ui_->closeButton, &QPushButton::clicked, this,
+            &ResultsWindow::on_closeButton_clicked);
 }
 
-QVector<QPair<QString, int>> ResultsWindow::getSortedResults(const QStringList &players, const QVector<int> &scores) const
-{
+ResultsWindow::~ResultsWindow() {
+    delete ui_;
+}
+
+QVector<QPair<QString, int>> ResultsWindow::GetSortedResults(
+    const QStringList& players, const QVector<int>& scores) const {
     QVector<QPair<QString, int>> results;
 
     // Собираем пары игрок-очки
@@ -38,15 +49,14 @@ QVector<QPair<QString, int>> ResultsWindow::getSortedResults(const QStringList &
 
     // Сортируем по убыванию очков
     std::sort(results.begin(), results.end(),
-              [](const QPair<QString, int> &a, const QPair<QString, int> &b) {
+              [](const QPair<QString, int>& a, const QPair<QString, int>& b) {
                   return a.second > b.second;
               });
 
     return results;
 }
 
-QString ResultsWindow::getPlaceText(int place) const
-{
+QString ResultsWindow::GetPlaceText(int place) const {
     switch (place) {
     case 1: return "🥇 1-е место";
     case 2: return "🥈 2-е место";
@@ -55,8 +65,7 @@ QString ResultsWindow::getPlaceText(int place) const
     }
 }
 
-QString ResultsWindow::getPlaceStyle(int place) const
-{
+QString ResultsWindow::GetPlaceStyle(int place) const {
     switch (place) {
     case 1:
         return R"(
@@ -112,17 +121,17 @@ QString ResultsWindow::getPlaceStyle(int place) const
     }
 }
 
-void ResultsWindow::setupResultsTable(const QVector<QPair<QString, int>> &sortedResults)
-{
-    ui->tableWidget->setRowCount(sortedResults.size());
-    ui->tableWidget->setColumnCount(3);  // Изменено с 4 на 3 (убрали столбец "Достижение")
+void ResultsWindow::SetupResultsTable(
+    const QVector<QPair<QString, int>>& sorted_results) {
+    ui_->tableWidget->setRowCount(sorted_results.size());
+    ui_->tableWidget->setColumnCount(3);  // Изменено с 4 на 3
 
     QStringList headers;
     headers << "Место" << "Игрок" << "Очки";  // Убрали "Достижение"
-    ui->tableWidget->setHorizontalHeaderLabels(headers);
+    ui_->tableWidget->setHorizontalHeaderLabels(headers);
 
     // Настройка таблицы
-    ui->tableWidget->horizontalHeader()->setStyleSheet(R"(
+    ui_->tableWidget->horizontalHeader()->setStyleSheet(R"(
         QHeaderView::section {
             background-color: #0f3460;
             color: white;
@@ -133,10 +142,10 @@ void ResultsWindow::setupResultsTable(const QVector<QPair<QString, int>> &sorted
         }
     )");
 
-    ui->tableWidget->verticalHeader()->setVisible(false);
-    ui->tableWidget->setShowGrid(false);
-    ui->tableWidget->setAlternatingRowColors(true);
-    ui->tableWidget->setStyleSheet(R"(
+    ui_->tableWidget->verticalHeader()->setVisible(false);
+    ui_->tableWidget->setShowGrid(false);
+    ui_->tableWidget->setAlternatingRowColors(true);
+    ui_->tableWidget->setStyleSheet(R"(
         QTableWidget {
             background-color: #16213e;
             color: white;
@@ -167,81 +176,87 @@ void ResultsWindow::setupResultsTable(const QVector<QPair<QString, int>> &sorted
     )");
 
     // Заполняем таблицу
-    for (int i = 0; i < sortedResults.size(); ++i) {
+    for (int i = 0; i < sorted_results.size(); ++i) {
         int place = i + 1;
-        const auto &player = sortedResults[i].first;
-        int score = sortedResults[i].second;
+        const auto& player = sorted_results[i].first;
+        int score = sorted_results[i].second;
 
         // Место
-        QTableWidgetItem *placeItem = new QTableWidgetItem(getPlaceText(place));
-        placeItem->setTextAlignment(Qt::AlignCenter);
-        placeItem->setFlags(placeItem->flags() ^ Qt::ItemIsEditable);
+        QTableWidgetItem* place_item = new QTableWidgetItem(GetPlaceText(place));
+        place_item->setTextAlignment(Qt::AlignCenter);
+        place_item->setFlags(place_item->flags() ^ Qt::ItemIsEditable);
 
         // Игрок
-        QTableWidgetItem *playerItem = new QTableWidgetItem(player);
-        playerItem->setTextAlignment(Qt::AlignCenter);
-        playerItem->setFlags(playerItem->flags() ^ Qt::ItemIsEditable);
+        QTableWidgetItem* player_item = new QTableWidgetItem(player);
+        player_item->setTextAlignment(Qt::AlignCenter);
+        player_item->setFlags(player_item->flags() ^ Qt::ItemIsEditable);
 
         // Очки
-        QTableWidgetItem *scoreItem = new QTableWidgetItem(QString::number(score));
-        scoreItem->setTextAlignment(Qt::AlignCenter);
-        scoreItem->setFlags(scoreItem->flags() ^ Qt::ItemIsEditable);
+        QTableWidgetItem* score_item = new QTableWidgetItem(QString::number(score));
+        score_item->setTextAlignment(Qt::AlignCenter);
+        score_item->setFlags(score_item->flags() ^ Qt::ItemIsEditable);
 
         // Устанавливаем стили для строк
         QFont font;
         font.setBold(true);
-        placeItem->setFont(font);
+        place_item->setFont(font);
 
         if (place == 1) {
-            placeItem->setForeground(QColor(255, 215, 0)); // Золотой
-            playerItem->setForeground(QColor(255, 215, 0));
-            scoreItem->setForeground(QColor(255, 215, 0));
+            place_item->setForeground(QColor(255, 215, 0));  // Золотой
+            player_item->setForeground(QColor(255, 215, 0));
+            score_item->setForeground(QColor(255, 215, 0));
         } else if (place == 2) {
-            placeItem->setForeground(QColor(192, 192, 192)); // Серебряный
-            playerItem->setForeground(QColor(192, 192, 192));
-            scoreItem->setForeground(QColor(192, 192, 192));
+            place_item->setForeground(QColor(192, 192, 192));  // Серебряный
+            player_item->setForeground(QColor(192, 192, 192));
+            score_item->setForeground(QColor(192, 192, 192));
         } else if (place == 3) {
-            placeItem->setForeground(QColor(205, 127, 50)); // Бронзовый
-            playerItem->setForeground(QColor(205, 127, 50));
-            scoreItem->setForeground(QColor(205, 127, 50));
+            place_item->setForeground(QColor(205, 127, 50));  // Бронзовый
+            player_item->setForeground(QColor(205, 127, 50));
+            score_item->setForeground(QColor(205, 127, 50));
         }
 
-        ui->tableWidget->setItem(i, 0, placeItem);
-        ui->tableWidget->setItem(i, 1, playerItem);
-        ui->tableWidget->setItem(i, 2, scoreItem);
+        ui_->tableWidget->setItem(i, 0, place_item);
+        ui_->tableWidget->setItem(i, 1, player_item);
+        ui_->tableWidget->setItem(i, 2, score_item);
     }
 
     // Ресайзим колонки
-    ui->tableWidget->resizeColumnsToContents();
-    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+    ui_->tableWidget->resizeColumnsToContents();
+    ui_->tableWidget->horizontalHeader()->setStretchLastSection(true);
 
     // Устанавливаем высоту строк
-    for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
-        ui->tableWidget->setRowHeight(i, 60);
+    for (int i = 0; i < ui_->tableWidget->rowCount(); ++i) {
+        ui_->tableWidget->setRowHeight(i, 60);
     }
 
     // Общая сумма очков
-    int totalScore = 0;
-    for (const auto &result : sortedResults) {
-        totalScore += result.second;
+    int total_score = 0;
+    for (const auto& result : sorted_results) {
+        total_score += result.second;
     }
-    ui->totalScoreLabel->setText(QString("Общая сумма очков: <span style='color:#ffd700; font-size: 18pt;'>%1</span>").arg(totalScore));
+    ui_->totalScoreLabel->setText(
+        QString("Общая сумма очков: <span style='color:#ffd700; font-size: 18pt;'>%1</span>")
+            .arg(total_score));
 
     // Победитель
-    if (!sortedResults.isEmpty()) {
-        QString winner = sortedResults[0].first;
-        int winnerScore = sortedResults[0].second;
-        ui->winnerLabel->setText(QString("Победитель: <span style='color:#ffd700; font-size: 20pt; font-weight: bold;'>%1</span> с <span style='color:#2ecc71; font-size: 18pt;'>%2 очками</span>!").arg(winner).arg(winnerScore));
+    if (!sorted_results.isEmpty()) {
+        QString winner = sorted_results[0].first;
+        int winner_score = sorted_results[0].second;
+        ui_->winnerLabel->setText(
+            QString("Победитель: <span style='color:#ffd700; font-size: 20pt; "
+                    "font-weight: bold;'>%1</span> с <span style='color:#2ecc71; "
+                    "font-size: 18pt;'>%2 очками</span>!")
+                .arg(winner)
+                .arg(winner_score));
     }
 }
 
-ResultsWindow::~ResultsWindow()
-{
-    delete ui;
+void ResultsWindow::on_closeButton_clicked() {
+    emit returnToMainMenu();
+    this->close();  // Используем close() вместо accept()
 }
 
-void ResultsWindow::on_closeButton_clicked()
-{
-    emit returnToMainMenu();  // Испускаем сигнал
-    this->accept();           // Закрываем окно результатов
+void ResultsWindow::closeEvent(QCloseEvent* event) {
+    // Не испускаем сигнал здесь, чтобы не дублировать
+    event->accept();
 }

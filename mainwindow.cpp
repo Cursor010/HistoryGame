@@ -1,57 +1,80 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "gamewindow.h"
-#include <QVBoxLayout>
+
+#include <QCloseEvent>
+#include <QFrame>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QScrollArea>
-#include <QFrame>
 #include <QTimer>
+#include <QVBoxLayout>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-    savedPlayerNames.clear();
-    setupPlayersLayout();
+#include "gamewindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent),
+    ui_(new Ui::MainWindow) {
+    ui_->setupUi(this);
+
+    // Сбрасываем сохраненные имена
+    saved_player_names_.clear();
+
+    // Устанавливаем значение по умолчанию для количества игроков
+    ui_->playerCountSpinBox->setValue(2);
+
+    SetupPlayersLayout();
 
     // Устанавливаем курсор после первого символа в QSpinBox
     QTimer::singleShot(0, this, [this]() {
-        QLineEdit *spinBoxLineEdit = ui->playerCountSpinBox->findChild<QLineEdit*>();
-        if (spinBoxLineEdit) {
-            spinBoxLineEdit->setCursorPosition(1); // После первого символа
+        QLineEdit* spin_box_line_edit =
+            ui_->playerCountSpinBox->findChild<QLineEdit*>();
+        if (spin_box_line_edit) {
+            spin_box_line_edit->setCursorPosition(1);
         }
     });
 }
 
-void MainWindow::setupPlayersLayout()
-{
+MainWindow::~MainWindow() {
+    delete ui_;
+}
+
+void MainWindow::ResetToDefault() {
+    // Сбрасываем количество игроков к значению по умолчанию
+    ui_->playerCountSpinBox->setValue(2);
+
+    // Очищаем сохраненные имена
+    saved_player_names_.clear();
+
+    // Принудительно обновляем layout
+    SetupPlayersLayout();
+}
+
+void MainWindow::SetupPlayersLayout() {
     // Сохраняем текущие имена игроков перед очисткой
-    QStringList currentNames;
-    for (QLineEdit *input : playerInputs) {
+    QStringList current_names;
+    for (QLineEdit* input : player_inputs_) {
         QString name = input->text().trimmed();
         if (name.isEmpty() || name.startsWith("Игрок ")) {
-            currentNames.append(""); // Пустое имя для дефолтных значений
+            current_names.append("");  // Пустое имя для дефолтных значений
         } else {
-            currentNames.append(name);
+            current_names.append(name);
         }
     }
 
     // Сохраняем имена, но только если у нас уже есть сохраненные имена
     // или мы в процессе первого запуска
-    if (savedPlayerNames.isEmpty() || !currentNames.isEmpty()) {
-        savedPlayerNames = currentNames;
+    if (saved_player_names_.isEmpty() || !current_names.isEmpty()) {
+        saved_player_names_ = current_names;
     }
 
     // Очищаем старые поля ввода и layouts
-    for (QLineEdit *input : playerInputs) {
+    for (QLineEdit* input : player_inputs_) {
         input->deleteLater();
     }
-    playerInputs.clear();
+    player_inputs_.clear();
 
-    for (QHBoxLayout *layout : playerLayouts) {
+    for (QHBoxLayout* layout : player_layouts_) {
         // Удаляем все виджеты из layout
         QLayoutItem* item;
         while ((item = layout->takeAt(0)) != nullptr) {
@@ -62,131 +85,131 @@ void MainWindow::setupPlayersLayout()
         }
         delete layout;
     }
-    playerLayouts.clear();
+    player_layouts_.clear();
 
-    int playerCount = ui->playerCountSpinBox->value();
+    int player_count = ui_->playerCountSpinBox->value();
 
-    for (int i = 0; i < playerCount; ++i) {
-        QHBoxLayout *playerLayout = new QHBoxLayout();
-        playerLayout->setSpacing(15);
+    for (int i = 0; i < player_count; ++i) {
+        QHBoxLayout* player_layout = new QHBoxLayout();
+        player_layout->setSpacing(15);
 
         // Создаем контейнер для номера игрока
-        QFrame *numberFrame = new QFrame();
-        numberFrame->setFixedSize(40, 40);
-        numberFrame->setStyleSheet(R"(
-            QFrame {
-                background-color: #3498db;
-                border-radius: 5px;
-                border: 2px solid #2980b9;
-            }
-        )");
+        QFrame* number_frame = new QFrame();
+        number_frame->setFixedSize(40, 40);
+        number_frame->setStyleSheet(R"(
+      QFrame {
+        background-color: #3498db;
+        border-radius: 5px;
+        border: 2px solid #2980b9;
+      }
+    )");
 
-        QLabel *numberLabel = new QLabel(QString::number(i + 1));
-        numberLabel->setAlignment(Qt::AlignCenter);
-        numberLabel->setStyleSheet(R"(
-            QLabel {
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                background: transparent;
-            }
-        )");
+        QLabel* number_label = new QLabel(QString::number(i + 1));
+        number_label->setAlignment(Qt::AlignCenter);
+        number_label->setStyleSheet(R"(
+      QLabel {
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        background: transparent;
+      }
+    )");
 
-        QVBoxLayout *numberLayout = new QVBoxLayout(numberFrame);
-        numberLayout->addWidget(numberLabel);
-        numberLayout->setContentsMargins(0, 0, 0, 0);
+        QVBoxLayout* number_layout = new QVBoxLayout(number_frame);
+        number_layout->addWidget(number_label);
+        number_layout->setContentsMargins(0, 0, 0, 0);
 
-        // Поле ввода для имени игрока
         // Проверяем, есть ли сохраненное имя для этого индекса
-        QString defaultName;
-        if (i < savedPlayerNames.size() && !savedPlayerNames[i].isEmpty()) {
+        QString default_name;
+        if (i < saved_player_names_.size() && !saved_player_names_[i].isEmpty()) {
             // Используем сохраненное имя
-            defaultName = savedPlayerNames[i];
+            default_name = saved_player_names_[i];
         } else {
             // Используем имя по умолчанию
-            defaultName = QString("Игрок %1").arg(i + 1);
+            default_name = QString("Игрок %1").arg(i + 1);
         }
 
-        QLineEdit *playerInput = new QLineEdit(defaultName);
-        playerInput->setStyleSheet(R"(
-            QLineEdit {
-                border: 2px solid #7f8c8d;
-                border-radius: 8px;
-                padding: 10px;
-                font-size: 14px;
-                background-color: #2c3e50;
-                color: #ecf0f1;
-                selection-background-color: #3498db;
-                selection-color: white;
-            }
-            QLineEdit:focus {
-                border-color: #3498db;
-                background-color: #34495e;
-            }
-            QLineEdit:hover {
-                border-color: #95a5a6;
-            }
-            QLineEdit:disabled {
-                background-color: #4a6278;
-                color: #bdc3c7;
-            }
-        )");
-        playerInput->setMinimumHeight(40);
+        // Поле ввода для имени игрока
+        QLineEdit* player_input = new QLineEdit(default_name);
+        player_input->setStyleSheet(R"(
+      QLineEdit {
+        border: 2px solid #7f8c8d;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 14px;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        selection-background-color: #3498db;
+        selection-color: white;
+      }
+      QLineEdit:focus {
+        border-color: #3498db;
+        background-color: #34495e;
+      }
+      QLineEdit:hover {
+        border-color: #95a5a6;
+      }
+      QLineEdit:disabled {
+        background-color: #4a6278;
+        color: #bdc3c7;
+      }
+    )");
+        player_input->setMinimumHeight(40);
 
         // Устанавливаем курсор после первого символа
-        QTimer::singleShot(0, [playerInput]() {
-            QString text = playerInput->text();
+        QTimer::singleShot(0, [player_input]() {
+            QString text = player_input->text();
             if (!text.isEmpty()) {
-                playerInput->setCursorPosition(1);
+                player_input->setCursorPosition(1);
             }
         });
 
         // Добавляем элементы в layout
-        playerLayout->addWidget(numberFrame);
-        playerLayout->addWidget(playerInput, 1); // 1 означает растягивание
+        player_layout->addWidget(number_frame);
+        player_layout->addWidget(player_input, 1);  // 1 означает растягивание
 
         // Добавляем layout в основной
-        ui->playersLayout->insertLayout(ui->playersLayout->count() - 1, playerLayout);
+        ui_->playersLayout->insertLayout(ui_->playersLayout->count() - 1,
+                                         player_layout);
 
-        playerInputs.append(playerInput);
-        playerLayouts.append(playerLayout);
+        player_inputs_.append(player_input);
+        player_layouts_.append(player_layout);
     }
 }
 
-void MainWindow::on_playerCountSpinBox_valueChanged(int arg1)
-{
+void MainWindow::on_playerCountSpinBox_valueChanged(int arg1) {
     // Сохраняем текущие имена перед обновлением
-    savedPlayerNames.clear();
-    for (QLineEdit *input : playerInputs) {
+    saved_player_names_.clear();
+    for (QLineEdit* input : player_inputs_) {
         QString name = input->text().trimmed();
-        savedPlayerNames.append(name);
+        saved_player_names_.append(name);
     }
 
-    setupPlayersLayout();
+    SetupPlayersLayout();
 }
 
-void MainWindow::on_startGameButton_clicked()
-{
-    QStringList playerNames;
-    for (QLineEdit *input : playerInputs) {
+void MainWindow::closeEvent(QCloseEvent* event) {
+    // Закрываем приложение при закрытии главного окна
+    qApp->quit();
+    event->accept();
+}
+
+void MainWindow::on_startGameButton_clicked() {
+    QStringList player_names;
+    for (QLineEdit* input : player_inputs_) {
         QString name = input->text().trimmed();
         if (!name.isEmpty()) {
-            playerNames.append(name);
+            player_names.append(name);
         } else {
-            playerNames.append("Игрок");
+            player_names.append("Игрок");
         }
     }
 
-    if (playerNames.isEmpty()) {
-        playerNames.append("Игрок 1");
+    if (player_names.isEmpty()) {
+        player_names.append("Игрок 1");
     }
 
-    GameWindow *gameWindow = new GameWindow(playerNames);
-    gameWindow->show();
-    this->hide();
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
+    GameWindow* game_window = new GameWindow(player_names);
+    game_window->show();
+    this->hide();  // Используем hide() вместо close()
 }

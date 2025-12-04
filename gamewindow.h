@@ -2,14 +2,18 @@
 #define GAMEWINDOW_H
 
 #include <QMainWindow>
+#include <QPointer>
+#include <QPushButton>
 #include <QStringList>
 #include <QVector>
-#include <QPushButton>
-#include "resultswindow.h"  // Добавьте эту строку
-#include "mainwindow.h" // Добавить эту строку
+
+#include "mainwindow.h"
+#include "resultswindow.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class GameWindow; }
+namespace Ui {
+class GameWindow;
+}
 QT_END_NAMESPACE
 
 struct Question {
@@ -19,33 +23,36 @@ struct Question {
     bool answered;
 };
 
-class GameWindow : public QMainWindow
-{
+class GameWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit GameWindow(const QStringList &players, QWidget *parent = nullptr);
+    explicit GameWindow(const QStringList& players, QWidget* parent = nullptr);
     ~GameWindow();
 
 private slots:
     void handleQuestionClick();
     void handleAnswerResult(bool correct);
-    void on_endGameButton_clicked();  // Добавьте эту строку
+    void on_endGameButton_clicked();
+    void onReturnToMainMenu();
 
 private:
-    Ui::GameWindow *ui;
-    void setupGame();
-    void nextTurn();
-    void updateScore();
-    void createQuestions();
-    bool loadQuestionsFromXML();
-    void disableAllQuestionButtons();  // Добавьте эту строку
+    void SetupGame();
+    void NextTurn();
+    void UpdateScore();
+    void CreateQuestions();
+    bool LoadQuestionsFromXml();
+    void DisableAllQuestionButtons();
+    void CheckIfAllQuestionsAnswered();
 
-    QStringList players;
-    QVector<int> scores;
-    int currentPlayer;
-    QVector<QVector<Question>> questions;
-    QPushButton *currentQuestionButton;
+    Ui::GameWindow* ui_;
+    QPointer<MainWindow> main_window_;
+
+    QStringList players_;
+    QVector<int> scores_;
+    int current_player_;
+    QVector<QVector<Question>> questions_;
+    QPushButton* current_question_button_;
 };
 
-#endif // GAMEWINDOW_H
+#endif  // GAMEWINDOW_H

@@ -7,12 +7,12 @@ namespace Ui {
 class QuestionWindow;
 }
 
-class QuestionWindow : public QDialog
-{
+class QuestionWindow : public QDialog {
     Q_OBJECT
 
 public:
-    explicit QuestionWindow(const QString &question, const QString &answer, int value, QWidget *parent = nullptr);
+    explicit QuestionWindow(const QString& question, const QString& answer,
+                            int value, QWidget* parent = nullptr);
     ~QuestionWindow();
 
 signals:
@@ -24,9 +24,7 @@ private slots:
     void on_incorrectButton_clicked();
 
 private:
-    Ui::QuestionWindow *ui;
-    QString questionText;
-    QString answerText;
+    Ui::QuestionWindow* ui_;
 };
 
-#endif // QUESTIONWINDOW_H
+#endif  // QUESTIONWINDOW_H
