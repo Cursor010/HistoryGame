@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../assets/data/questions.xml</file>
+        <file>../assets/img/down.png</file>
+        <file>../assets/img/bg.png</file>
+        <file>../assets/img/up.png</file>
+    </qresource>
+</RCC>
