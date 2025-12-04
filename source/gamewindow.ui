@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>900</height>
+    <width>1500</width>
+    <height>950</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1100</width>
-    <height>800</height>
+    <width>1400</width>
+    <height>850</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -26,20 +26,36 @@
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="mainHorizontalLayout">
+    <property name="spacing">
+     <number>20</number>
+    </property>
+    <property name="leftMargin">
+     <number>15</number>
+    </property>
+    <property name="topMargin">
+     <number>15</number>
+    </property>
+    <property name="rightMargin">
+     <number>15</number>
+    </property>
+    <property name="bottomMargin">
+     <number>15</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="gameBoardLayout">
       <property name="spacing">
-       <number>10</number>
+       <number>15</number>
       </property>
       <item>
-       <widget class="QFrame" name="frame">
+       <widget class="QFrame" name="infoFrame">
         <property name="styleSheet">
          <string notr="true">QFrame {
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
         stop:0 #0f3460, stop:1 #16213e);
     border-radius: 12px;
-    border: 2px solid #2d4059;
+    border: 3px solid #2d4059;
+    padding: 10px;
 }</string>
         </property>
         <property name="frameShape">
@@ -48,7 +64,7 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="infoLayout">
          <property name="spacing">
           <number>40</number>
          </property>
@@ -68,14 +84,15 @@
           <widget class="QLabel" name="currentPlayerLabel">
            <property name="styleSheet">
             <string notr="true">QLabel {
-    font-size: 14pt;
+    font-size: 16pt;
     font-weight: bold;
     color: #e6e6e6;
     background: transparent;
+    padding: 8px 15px;
 }</string>
            </property>
            <property name="text">
-            <string>Текущий игрок: Игрок 1</string>
+            <string>🎮 Текущий игрок: Игрок 1</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -86,14 +103,15 @@
           <widget class="QLabel" name="scoreLabel">
            <property name="styleSheet">
             <string notr="true">QLabel {
-    font-size: 14pt;
+    font-size: 16pt;
     font-weight: bold;
     color: #ffd700;
     background: transparent;
+    padding: 8px 15px;
 }</string>
            </property>
            <property name="text">
-            <string>Счет: 0</string>
+            <string>💰 Счет: 0</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -105,6 +123,12 @@
       </item>
       <item>
        <widget class="QLabel" name="backgroundImageLabel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QLabel {
     border-radius: 10px;
@@ -125,12 +149,12 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame_2">
+       <widget class="QFrame" name="gameBoardFrame">
         <property name="styleSheet">
          <string notr="true">QFrame {
     background-color: #16213e;
     border-radius: 15px;
-    border: 2px solid #2d4059;
+    border: 3px solid #2d4059;
 }</string>
         </property>
         <property name="frameShape">
@@ -141,26 +165,26 @@
         </property>
         <layout class="QGridLayout" name="gameGridLayout">
          <property name="leftMargin">
-          <number>15</number>
+          <number>20</number>
          </property>
          <property name="topMargin">
-          <number>15</number>
+          <number>20</number>
          </property>
          <property name="rightMargin">
-          <number>15</number>
+          <number>20</number>
          </property>
          <property name="bottomMargin">
-          <number>15</number>
+          <number>20</number>
          </property>
          <property name="spacing">
-          <number>10</number>
+          <number>12</number>
          </property>
          <item row="0" column="0">
           <widget class="QLabel" name="theme1Label">
            <property name="minimumSize">
             <size>
-             <width>150</width>
-             <height>60</height>
+             <width>160</width>
+             <height>70</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -187,13 +211,13 @@
           <widget class="QPushButton" name="theme1_100">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -226,13 +250,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme1_200">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -265,13 +289,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme1_300">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -304,13 +328,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme1_400">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -343,13 +367,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme1_500">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -382,8 +406,8 @@ QPushButton:disabled {
           <widget class="QLabel" name="theme2Label">
            <property name="minimumSize">
             <size>
-             <width>150</width>
-             <height>60</height>
+             <width>160</width>
+             <height>70</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -410,13 +434,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme2_100">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -449,13 +473,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme2_200">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -488,13 +512,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme2_300">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -527,13 +551,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme2_400">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -566,13 +590,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme2_500">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -605,8 +629,8 @@ QPushButton:disabled {
           <widget class="QLabel" name="theme3Label">
            <property name="minimumSize">
             <size>
-             <width>150</width>
-             <height>60</height>
+             <width>160</width>
+             <height>70</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -633,13 +657,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme3_100">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -672,13 +696,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme3_200">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -711,13 +735,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme3_300">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -750,13 +774,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme3_400">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -789,13 +813,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme3_500">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -828,14 +852,14 @@ QPushButton:disabled {
           <widget class="QLabel" name="theme4Label">
            <property name="minimumSize">
             <size>
-             <width>150</width>
-             <height>60</height>
+             <width>160</width>
+             <height>70</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QLabel {
     font-weight: bold;
-    font-size: 14pt;
+    font-size: 15pt;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
         stop:0 #f39c12, stop:1 #d68910);
@@ -856,13 +880,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme4_100">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -895,13 +919,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme4_200">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -934,13 +958,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme4_300">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -973,13 +997,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme4_400">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1012,13 +1036,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme4_500">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1051,8 +1075,8 @@ QPushButton:disabled {
           <widget class="QLabel" name="theme5Label">
            <property name="minimumSize">
             <size>
-             <width>150</width>
-             <height>60</height>
+             <width>160</width>
+             <height>70</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -1079,13 +1103,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme5_100">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1118,13 +1142,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme5_200">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1157,13 +1181,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme5_300">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1196,13 +1220,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme5_400">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1235,13 +1259,13 @@ QPushButton:disabled {
           <widget class="QPushButton" name="theme5_500">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>80</height>
+             <width>130</width>
+             <height>85</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: bold;
     padding: 15px;
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1273,36 +1297,34 @@ QPushButton:disabled {
         </layout>
        </widget>
       </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="bottomLayout">
-      <property name="spacing">
-       <number>10</number>
-      </property>
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <layout class="QHBoxLayout" name="bottomLayout">
+        <property name="spacing">
+         <number>15</number>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="endGameButton">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="endGameButton">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>65</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
         stop:0 #e74c3c, stop:1 #c0392b);
     color: white;
@@ -1310,7 +1332,7 @@ QPushButton:disabled {
     font-weight: bold;
     border: none;
     border-radius: 10px;
-    padding: 15px 30px;
+    padding: 18px 35px;
 }
 QPushButton:hover {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -1320,26 +1342,76 @@ QPushButton:pressed {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
         stop:0 #a93226, stop:1 #922b21);
 }</string>
-        </property>
-        <property name="text">
-         <string>Завершить игру</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
+          </property>
+          <property name="text">
+           <string>🏁 Завершить игру</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QFrame" name="playersPanel">
+      <property name="minimumSize">
+       <size>
+        <width>350</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>400</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #0c2461, stop:1 #1e3799);
+    border-radius: 15px;
+    border: 3px solid #0a3d62;
+    padding: 0px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="playersPanelLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>

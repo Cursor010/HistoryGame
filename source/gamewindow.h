@@ -2,19 +2,15 @@
 #define GAMEWINDOW_H
 
 #include <QMainWindow>
-#include <QPointer>
-#include <QPushButton>
-#include <QStringList>
 #include <QVector>
+#include <QStringList>
+#include <QPushButton>
+#include <QFrame>
+#include <QVBoxLayout>
 
-#include "mainwindow.h"
-#include "resultswindow.h"
-
-QT_BEGIN_NAMESPACE
 namespace Ui {
 class GameWindow;
 }
-QT_END_NAMESPACE
 
 struct Question {
     QString question;
@@ -23,7 +19,8 @@ struct Question {
     bool answered;
 };
 
-class GameWindow : public QMainWindow {
+class GameWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -37,22 +34,28 @@ private slots:
     void onReturnToMainMenu();
 
 private:
-    void SetupGame();
-    void NextTurn();
-    void UpdateScore();
-    void CreateQuestions();
     bool LoadQuestionsFromXml();
+    void CreateQuestions();
+    void SetupGame();
+    void UpdateScore();
+    void NextTurn();
     void DisableAllQuestionButtons();
+    void UpdatePlayersPanel();
     void CheckIfAllQuestionsAnswered();
+    void AutoFinishGame();
+    void ScrollToCurrentPlayer();
 
     Ui::GameWindow* ui_;
-    QPointer<MainWindow> main_window_;
-
     QStringList players_;
     QVector<int> scores_;
     int current_player_;
-    QVector<QVector<Question>> questions_;
     QPushButton* current_question_button_;
+    QVector<QVector<Question>> questions_;
+    QMainWindow* main_window_ = nullptr;
+    QVector<QFrame*> player_frames_;
+    int total_questions_ = 25;
+    int answered_questions_ = 0;
+    QVBoxLayout* players_container_layout_ = nullptr;
 };
 
-#endif  // GAMEWINDOW_H
+#endif // GAMEWINDOW_H

@@ -241,7 +241,7 @@ void ResultsWindow::SetupResultsTable(
 
 void ResultsWindow::on_closeButton_clicked() {
     emit returnToMainMenu();
-    this->close();  // Используем close() вместо accept()
+    this->close();
 }
 
 void ResultsWindow::closeEvent(QCloseEvent* event) {
