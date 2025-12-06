@@ -73,7 +73,7 @@ HistoryGame — это приложение для проведения викт
 
 #### Для Windows:
 # Клонирование репозитория
-git clone git@github.com:Cursor010/HistoryGame.git
+git clone https://github.com/Cursor010/HistoryGame.git
 cd HistoryGame
 
 # Конфигурация проекта (укажите путь к Qt)
