@@ -71,29 +71,29 @@ HistoryGame — это приложение для проведения викт
 
 ### Инструкция по сборке
 
-#### Для Windows:
-## Клонирование репозитория
+## Для Windows:
+### Клонирование репозитория
 ```powershell
 git clone https://github.com/Cursor010/HistoryGame.git
 cd HistoryGame
 ```
 
-## Создание директории для сборки
+### Создание директории для сборки
 ```powershell
 mkdir build
 cd build
 ```
 
-## Конфигурация проекта (укажите путь к Qt)
+### Конфигурация проекта (укажите путь к Qt)
 ```powershell
 cmake .. -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:/Qt/6.x.x/mingw_64"
 ```
-## Сборка проекта
+### Сборка проекта
 ```powershell
 cmake --build .
 ```
 
-## Запуск приложения
+### Запуск приложения
 ```powershell
 ./Debug/HistoryGame.exe
 ```
