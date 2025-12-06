@@ -92,7 +92,7 @@
 }</string>
            </property>
            <property name="text">
-            <string>🎮 Текущий игрок: Игрок 1</string>
+            <string>Текущий игрок: Игрок 1</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -111,7 +111,7 @@
 }</string>
            </property>
            <property name="text">
-            <string>💰 Счет: 0</string>
+            <string>Счет: 0</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1344,7 +1344,7 @@ QPushButton:pressed {
 }</string>
           </property>
           <property name="text">
-           <string>🏁 Завершить игру</string>
+           <string>Завершить игру</string>
           </property>
          </widget>
         </item>

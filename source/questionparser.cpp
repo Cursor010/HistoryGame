@@ -9,7 +9,7 @@ QuestionParser::QuestionParser()
 
 bool QuestionParser::LoadFromResource(QVector<QVector<Question>>& questions) {
 
-    QString resourcePath = ":/data/questions.xml";
+    QString resourcePath = ":assets/data/questions.xml";
 
     qDebug() << "Попытка открыть ресурс:" << resourcePath;
 

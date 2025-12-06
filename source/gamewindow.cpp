@@ -480,8 +480,8 @@ void GameWindow::NextTurn() {
 }
 
 void GameWindow::UpdateScore() {
-    ui_->currentPlayerLabel->setText("🎮 Текущий игрок: " + players_[current_player_]);
-    ui_->scoreLabel->setText("💰 Счет: " + QString::number(scores_[current_player_]));
+    ui_->currentPlayerLabel->setText("Текущий игрок: " + players_[current_player_]);
+    ui_->scoreLabel->setText("Счет: " + QString::number(scores_[current_player_]));
 }
 
 void GameWindow::on_endGameButton_clicked() {

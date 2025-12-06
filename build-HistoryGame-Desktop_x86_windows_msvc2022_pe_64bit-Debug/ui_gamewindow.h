@@ -1074,8 +1074,8 @@ public:
     void retranslateUi(QMainWindow *GameWindow)
     {
         GameWindow->setWindowTitle(QCoreApplication::translate("GameWindow", "\320\230\321\201\321\202\320\276\321\200\320\270\321\207\320\265\321\201\320\272\320\260\321\217 \320\222\320\270\320\272\321\202\320\276\321\200\320\270\320\275\320\260", nullptr));
-        currentPlayerLabel->setText(QCoreApplication::translate("GameWindow", "\360\237\216\256 \320\242\320\265\320\272\321\203\321\211\320\270\320\271 \320\270\320\263\321\200\320\276\320\272: \320\230\320\263\321\200\320\276\320\272 1", nullptr));
-        scoreLabel->setText(QCoreApplication::translate("GameWindow", "\360\237\222\260 \320\241\321\207\320\265\321\202: 0", nullptr));
+        currentPlayerLabel->setText(QCoreApplication::translate("GameWindow", "\320\242\320\265\320\272\321\203\321\211\320\270\320\271 \320\270\320\263\321\200\320\276\320\272: \320\230\320\263\321\200\320\276\320\272 1", nullptr));
+        scoreLabel->setText(QCoreApplication::translate("GameWindow", "\320\241\321\207\320\265\321\202: 0", nullptr));
         backgroundImageLabel->setText(QString());
         theme1Label->setText(QCoreApplication::translate("GameWindow", "\360\237\223\232 \320\242\320\265\321\200\320\274\320\270\320\275\321\213", nullptr));
         theme1_100->setText(QCoreApplication::translate("GameWindow", "100", nullptr));
@@ -1107,7 +1107,7 @@ public:
         theme5_300->setText(QCoreApplication::translate("GameWindow", "300", nullptr));
         theme5_400->setText(QCoreApplication::translate("GameWindow", "400", nullptr));
         theme5_500->setText(QCoreApplication::translate("GameWindow", "500", nullptr));
-        endGameButton->setText(QCoreApplication::translate("GameWindow", "\360\237\217\201 \320\227\320\260\320\262\320\265\321\200\321\210\320\270\321\202\321\214 \320\270\320\263\321\200\321\203", nullptr));
+        endGameButton->setText(QCoreApplication::translate("GameWindow", "\320\227\320\260\320\262\320\265\321\200\321\210\320\270\321\202\321\214 \320\270\320\263\321\200\321\203", nullptr));
     } // retranslateUi
 
 };
