@@ -80,8 +80,8 @@ HistoryGame — это приложение для проведения викт
 ### Инструкция по сборке
 
 #### Для Windows:
-```powershell
 # Клонирование репозитория
+```powershell
 git clone https://github.com/Cursor010/HistoryGame.git
 cd HistoryGame
 ```
@@ -102,5 +102,6 @@ cmake --build .
 ```
 
 # Запуск приложения
+```powershell
 ./Debug/HistoryGame.exe
-
+```
