@@ -69,9 +69,8 @@ HistoryGame — это приложение для проведения викт
 - CMake 3.16+
 - Git (для клонирования репозитория)
 
-### Инструкция по сборке
+## Инструкция по сборке для Windows:
 
-## Для Windows:
 ### Клонирование репозитория
 ```powershell
 git clone https://github.com/Cursor010/HistoryGame.git
