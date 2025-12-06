@@ -87,14 +87,19 @@ cd HistoryGame
 ```
 
 # Создание директории для сборки
+```powershell
 mkdir build
 cd build
+```
 
 # Конфигурация проекта (укажите путь к Qt)
+```powershell
 cmake .. -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:/Qt/6.x.x/mingw_64"
-
+```
 # Сборка проекта
+```powershell
 cmake --build .
+```
 
 # Запуск приложения
 ./Debug/HistoryGame.exe
