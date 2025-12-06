@@ -18,7 +18,7 @@ HistoryGame — это приложение для проведения викт
 
 ### Игровое окно (GameWindow)
 ![GameWindow](https://github.com/Cursor010/HistoryGame/blob/main/assets/screenshots/gamewindow.png)
-*Игровое поле с вопросами, таблицей лидеров и управлением*
+*Игровое поле с вопросами, таблицей игроков и управлением*
 
 ### Окно вопроса (QuestionWindow)
 ![QuestionWindow](https://github.com/Cursor010/HistoryGame/blob/main/assets/screenshots/questionwindow.png)
