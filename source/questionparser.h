@@ -4,7 +4,9 @@
 #include <QString>
 #include <QVector>
 #include <QStringList>
+#include <QByteArray>
 
+// Определение структуры Question
 struct Question {
     QString question;
     QString answer;

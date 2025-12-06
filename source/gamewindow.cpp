@@ -2,6 +2,7 @@
 #include "questionwindow.h"
 #include "resultswindow.h"
 #include "mainwindow.h"
+#include "questionparser.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -10,7 +11,6 @@
 #include <QMessageBox>
 #include <QRegularExpression>
 #include <QTimer>
-#include <QXmlStreamReader>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -36,10 +36,10 @@ GameWindow::GameWindow(const QStringList& players, QWidget* parent)
         scores_[i] = 0;
     }
 
-    // Пытаемся загрузить вопросы из XML
-    if (!LoadQuestionsFromXml()) {
+    // Пытаемся загрузить вопросы через парсер
+    if (!LoadQuestions()) {
         qDebug() << "Используются стандартные вопросы";
-        CreateQuestions();
+        CreateDefaultQuestions();
     }
 
     SetupGame();
@@ -49,113 +49,16 @@ GameWindow::~GameWindow() {
     delete ui_;
 }
 
-bool GameWindow::LoadQuestionsFromXml() {
-    QStringList possible_paths = {
-        "questions.xml",
-        QDir::currentPath() + "/questions.xml",
-        QApplication::applicationDirPath() + "/questions.xml",
-    };
-
-    QFile file;
-    for (const QString& path : possible_paths) {
-        file.setFileName(path);
-        if (file.exists()) {
-            qDebug() << "Найден файл вопросов:" << path;
-            break;
-        }
-    }
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Не удалось открыть файл questions.xml";
+bool GameWindow::LoadQuestions() {
+    QuestionParser parser;
+    if (!parser.LoadFromResource(questions_)) {
+        qDebug() << "Не удалось загрузить вопросы через парсер";
         return false;
     }
-
-    QXmlStreamReader xml(&file);
-
-    questions_.clear();
-    questions_.resize(5);
-    for (int i = 0; i < 5; ++i) {
-        questions_[i].resize(5);
-        for (int j = 0; j < 5; ++j) {
-            questions_[i][j].value = (j + 1) * 100;
-            questions_[i][j].answered = false;
-            questions_[i][j].question = "Вопрос не загружен";
-            questions_[i][j].answer = "Ответ не загружен";
-        }
-    }
-
-    int current_theme = -1;
-    int current_value = 0;
-    QString current_text;
-    QString current_element;
-
-    while (!xml.atEnd() && !xml.hasError()) {
-        QXmlStreamReader::TokenType token = xml.readNext();
-
-        if (token == QXmlStreamReader::StartElement) {
-            QString element_name = xml.name().toString();
-
-            if (element_name == "theme") {
-                current_theme++;
-            } else if (element_name == "question") {
-                current_value = xml.attributes().value("value").toInt();
-            } else if (element_name == "text" || element_name == "answer") {
-                current_element = element_name;
-                current_text.clear();
-            }
-        } else if (token == QXmlStreamReader::Characters) {
-            if (!xml.isWhitespace()) {
-                current_text += xml.text().toString();
-            }
-        } else if (token == QXmlStreamReader::EndElement) {
-            QString element_name = xml.name().toString();
-
-            if (element_name == "text" && current_theme >= 0 && current_theme < 5) {
-                int value_index = current_value / 100 - 1;
-                if (value_index >= 0 && value_index < 5) {
-                    questions_[current_theme][value_index].question = current_text.trimmed();
-                }
-            } else if (element_name == "answer" && current_theme >= 0 && current_theme < 5) {
-                int value_index = current_value / 100 - 1;
-                if (value_index >= 0 && value_index < 5) {
-                    questions_[current_theme][value_index].answer = current_text.trimmed();
-                }
-            }
-        }
-    }
-
-    if (xml.hasError()) {
-        qDebug() << "Ошибка XML:" << xml.errorString();
-        file.close();
-        return false;
-    }
-
-    file.close();
-
-    // Проверяем загрузку
-    bool success = true;
-    int loaded_count = 0;
-    for (int i = 0; i < 5; ++i) {
-        for (int j = 0; j < 5; ++j) {
-            if (questions_[i][j].question != "Вопрос не загружен" &&
-                questions_[i][j].answer != "Ответ не загружен") {
-                loaded_count++;
-            } else {
-                success = false;
-            }
-        }
-    }
-
-    if (success) {
-        qDebug() << "Все" << loaded_count << "вопросов успешно загружены из XML";
-    } else {
-        qDebug() << "Загружено" << loaded_count << "вопросов из 25";
-    }
-
-    return success;
+    return true;
 }
 
-void GameWindow::CreateQuestions() {
+void GameWindow::CreateDefaultQuestions() {
     QStringList themes = {"Термины", "Личности", "Даты", "Политические партии", "Лозунги"};
     questions_.resize(5);
 

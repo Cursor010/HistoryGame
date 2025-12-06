@@ -8,16 +8,16 @@
 #include <QFrame>
 #include <QVBoxLayout>
 
+// Включаем определение структуры Question
+#include "questionparser.h"
+
 namespace Ui {
 class GameWindow;
 }
 
-struct Question {
-    QString question;
-    QString answer;
-    int value;
-    bool answered;
-};
+class QuestionWindow;
+class ResultsWindow;
+class MainWindow;
 
 class GameWindow : public QMainWindow
 {
@@ -34,8 +34,12 @@ private slots:
     void onReturnToMainMenu();
 
 private:
-    bool LoadQuestionsFromXml();
-    void CreateQuestions();
+    // Загрузка вопросов через парсер
+    bool LoadQuestions();
+
+    // Создание стандартных вопросов
+    void CreateDefaultQuestions();
+
     void SetupGame();
     void UpdateScore();
     void NextTurn();
@@ -50,8 +54,8 @@ private:
     QVector<int> scores_;
     int current_player_;
     QPushButton* current_question_button_;
-    QVector<QVector<Question>> questions_;
-    QMainWindow* main_window_ = nullptr;
+    QVector<QVector<Question>> questions_;  // Используем Question из questionparser.h
+    MainWindow* main_window_ = nullptr;
     QVector<QFrame*> player_frames_;
     int total_questions_ = 25;
     int answered_questions_ = 0;

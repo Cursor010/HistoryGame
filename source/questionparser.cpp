@@ -8,9 +8,7 @@ QuestionParser::QuestionParser()
     : loaded_count_(0), success_(false) {}
 
 bool QuestionParser::LoadFromResource(QVector<QVector<Question>>& questions) {
-
-    QString resourcePath = ":assets/data/questions.xml";
-
+    QString resourcePath = ":/assets/data/questions.xml";
     qDebug() << "Попытка открыть ресурс:" << resourcePath;
 
     QFile resourceFile(resourcePath);
@@ -60,7 +58,6 @@ bool QuestionParser::ParseXmlFromByteArray(const QByteArray& xmlData,
     int current_theme = -1;
     int current_value = 0;
     QString current_text;
-    QString current_element;
     bool insideText = false;
     bool insideAnswer = false;
 
